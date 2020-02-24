@@ -1,0 +1,247 @@
+/* Start Global Style */
+
+.container-fluid {
+  padding: 60px 50px;
+}
+
+.slideanim {
+  visibility:hidden;
+}
+
+/* End Global Style */
+
+/* Start Navbar */
+
+
+
+/* End Navbar */
+
+
+/* Start Main Section */
+
+.jumbotron {
+  background-color: #f4511e;
+  color: #fff;
+  padding: 100px 25px;
+  font-family: Montserrat, sans-serif;
+}
+
+/* End Main Section */
+
+/* Start About Section */
+
+.logo {
+  color: #f4511e;
+  font-size: 200px;
+}
+
+/* End About Section */
+
+/* Start Services Section */
+
+.slideanim {
+  visibility:hidden;
+}
+
+.logo-small {
+  color: #f4511e;
+font-size: 50px;
+}
+
+/* End Services Section */
+
+/* Start Train trips Section */
+
+.bg-grey {
+  background-color: #f6f6f6;
+}
+
+.thumbnail img {
+  margin-bottom: 10px;
+}
+
+.thumbnail a {
+  color: blue;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.item h4 {
+  font-size: 19px;
+  line-height: 1.375em;
+  font-weight: 400;
+  font-style: italic;
+  margin: 70px 0;
+}
+
+.carousel-control.right, .carousel-control.left {
+  color: #f4511e;
+}
+
+.carousel-indicators li {
+  border-color: #f4511e;
+}
+.carousel-indicators li.active {
+  background-color: #f4511e;
+}
+
+.slide {
+  animation-name: slide;
+  -webkit-animation-name: slide;
+  animation-duration: 1s;
+  -webkit-animation-duration: 1s;
+  visibility: visible;
+}
+
+@keyframes slide {
+  0% {
+    opacity: 0;
+    transform: translateY(70%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+@-webkit-keyframes slide {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(70%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0%);
+  }
+}
+
+/* End Train trips Section */
+
+/* Start Register Section */
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: # #cccccc;
+  padding-top: 50px;
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 30px;
+  top: 15px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.close:hover,
+.close:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 100%; /* Could be more or less, depending on screen size */
+}
+
+label {
+  min-width: 10%;
+}
+
+@media screen and (max-width: 768px) {
+  label {
+  min-width: 30%;
+  }
+}
+
+input[type=text], input[type=password] {
+  width: 50%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+}
+
+/* Add a background color when the inputs get focus */
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+}
+
+button {
+  background-color: #3385ff;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  padding: 14px 20px;
+  background-color: #f44336;
+}
+
+/* End Register Section */
+
+/* Start Contact Section */
+
+
+/* End Contact Section */
+
+/* Start Footer Section */
+
+footer .glyphicon {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #f4511e;
+}
+
+/* End Footer Section */
+
+/* Start Media 768px */
+
+@media screen and (max-width: 768px) {
+  .col-sm-4 {
+    text-align: center;
+  }
+  .btn-lg {
+    width: 100%;
+    margin-bottom: 35px;
+  }
+}
+
+/* End Media 480px */
+
+/* Start Media 480px */
+
+@media screen and (max-width: 480px) {
+  .logo {
+    font-size: 150px;
+  }
+}
+
+/* End Media 768px */

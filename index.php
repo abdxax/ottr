@@ -1,4 +1,5 @@
 <?php
+session_start();
 require "conne.php";
 if(isset($_POST['sub'])){
     $name=strip_tags($_POST['first_name'])." ".strip_tags($_POST['last_name']);
@@ -13,13 +14,35 @@ if(isset($_POST['sub'])){
     if($password===$password_confirmation){
         $sql="INSERT INTO user (email,password,role)VALUES ('$email','$password_confirmation','2')";
         if(mysqli_query($mycon,$sql)){
-            echo "dd";
+            //echo "dd";
+          $sql_info="INSERT INTO info(email,name,phone,age,natl,id,Gender) VALUES('$email','$name','$phone','$age','$national','$id','$gender')";
+          if(mysqli_query($mycon,$sql_info)){
+            $_SESSION['email']=$email;
+            $_SESSION['password']=$password;
+            header("location:index.php");
+          }
+          else{
+            echo "ss";
+          }
         }
         else{
             echo "S";
         }
     }
 
+}
+
+if(isset($_POST['login'])){
+  $email=strip_tags($_POST['email']);
+  $psw=strip_tags($_POST['psw']);
+  $sql_login="SELECT * FROM user WHERE email='$email' AND password='$psw'";
+  $res=mysqli_query($mycon,$sql_login);
+  if(mysqli_num_rows($res)==1){
+    $_SESSION['email']=$email;
+    $_SESSION['password']=$psw;
+     header("location:index.php");
+
+  }
 }
 
 
@@ -122,7 +145,31 @@ if(isset($_POST['sub'])){
       <h2>Train trips</h2><br>
       <h4>where do you want to go?</h4>
       <div class="row text-center slideanim">
-        <div class="col-sm-4">
+
+        <?php 
+          $sql_city="SELECT * FROM city ";
+          $res=mysqli_query($mycon,$sql_city);
+          if(mysqli_num_rows($res)>0){
+            
+            while ($rows=mysqli_fetch_array($res)) {
+              echo '
+              <div class="col-sm-4">
+          <div class="thumbnail">
+            <img src="img/r.jpg" alt="Riyadh" >
+            <p><strong>Riyadh </strong></p>
+            <p><a href="schedule.html">Train trips to Riyadh</a></p>
+          </div>
+        </div>
+
+              ';
+            }
+          }
+          else{
+     echo " NO OFFER AVALIBLE ";
+          }
+
+          ?>
+        <!--<div class="col-sm-4">
           <div class="thumbnail">
             <img src="img/m1.jpg" alt="Makkah">
             <p><strong>Makkah</strong></p>
@@ -165,7 +212,9 @@ if(isset($_POST['sub'])){
             <p><strong>Jeddah</strong></p>
             <p><a href="schedule.html">Train trips to Jeddah</a></p>
           </div>
-        </div>
+
+        </div>-->
+        
       </div><br>
       <h2>What our customers say</h2>
       <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
@@ -203,13 +252,16 @@ if(isset($_POST['sub'])){
     
     <!-- Start Register Section -->
     
-    <div id="pricing" class="container-fluid">
+    <?php 
+    if(!isset($_SESSION['email'])){
+      echo '
+         <div id="pricing" class="container-fluid">
       <div class="text-center">
         <h2>Register</h2>
-        <h4>If you register before <a id='login' style="width:auto;">Login</a></h4>
+        <h4>If you register before <a id="login" style="width:auto;">Login</a></h4>
         <div id="id01" class="modal">
           <span id="exit" title="Close Modal">&times;</span>
-          <form class="modal-content" action="index.html">
+          <form class="modal-content" method="POST">
             <div class="container">
               <h1>Login</h1>
               <p>Please fill in this form to login.</p>    
@@ -223,8 +275,8 @@ if(isset($_POST['sub'])){
                 <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
               </label>
               <div class="clearfix">
-                <button type="submit" class="signupbtn">login </button>
-                <button type="button" id='test' class="cancelbtn">Cancel</button>
+                <button type="submit" class="signupbtn" name="login">login </button>
+                <button type="button" id="test" class="cancelbtn">Cancel</button>
               </div>
             </div>
           </form>
@@ -278,6 +330,11 @@ if(isset($_POST['sub'])){
         </div>
       </div>
     </div>
+      ';
+    }
+
+
+    ?>
     
     <!-- End Register Section -->
     

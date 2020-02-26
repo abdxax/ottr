@@ -31,7 +31,25 @@ require "conne.php";
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="index.html">HOME</a></li>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#services">SERVICES</a></li>
+            <li><a href="#traintrips">TRAIN TRIPS</a></li>
+            
+            <li><a href="#contact">CONTACT</a></li>
+            <?php 
+            if(isset($_SESSION['email'])){
+              echo '<li><a href="checkout.php">Check Out</a></li></li>
+              <li><a href="logout.php">Logout</a></li></li>
+
+              ';
+
+            }
+            else{
+              echo'<li><a href="#register">REGISTER</a></li>';
+            }
+
+
+            ?>
           </ul>
         </div>
       </div>
@@ -59,15 +77,36 @@ require "conne.php";
         </thead>
         <tbody>
          <?php
-         $sql_teb="SELECT * FROM trip";
+         $id_ci=strip_tags($_GET['id_ci']);
+         $sql_teb="SELECT * FROM trip LEFT JOIN city ON trip.city_to=city.id WHERE trip.city_to='$id_ci'";
          $res=mysqli_query($mycon,$sql_teb);
          while ($rows=mysqli_fetch_array($res)) {
            # code...
+
           echo '
          <tr>
-         <td></td>
+         <td>'.$rows['tripon'].'</td>
+         <td>'.$rows['DeparturTime'].'</td>
+         <td>'.$rows['ArrivalTime'].'</td>
+         ';
+    $sql_city="SELECT * FROM city WHERE id='$rows[city_id]'";
+    $res=mysqli_query($mycon,$sql_city);
+    $ciy='';
+    while ($rowe=mysqli_fetch_array($res)) {
+      # code...
+      $ciy=$rowe['city_name'];
+    }
 
-         </tr>
+         echo '<td>'.$ciy.'</td>
+
+         <td>'.$rows['city_name'].'</td>
+         <td>'.$rows['OperationsDays'].'</td>
+         <td>'.$rows['price'].'</td>';
+         if(isset($_SESSION['email'])){
+          echo '<td><a href="addCar.php?idon='.$rows['tripon'].' class="btn btn-info">Booking </a></td>';
+         }
+
+         echo '</tr>
           ';
          }
 

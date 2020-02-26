@@ -19,10 +19,10 @@ if(isset($_POST['sub'])){
           if(mysqli_query($mycon,$sql_info)){
             $_SESSION['email']=$email;
             $_SESSION['password']=$password;
-            header("location:index.php");
+            header("location:index.php?msg=reg");
           }
           else{
-            echo "ss";
+            header("location:index.php?msg=Nreg");
           }
         }
         else{
@@ -38,10 +38,24 @@ if(isset($_POST['login'])){
   $sql_login="SELECT * FROM user WHERE email='$email' AND password='$psw'";
   $res=mysqli_query($mycon,$sql_login);
   if(mysqli_num_rows($res)==1){
-    $_SESSION['email']=$email;
+    while ($rows=mysqli_fetch_array($res)) {
+      if($rows['role']==1){
+        $_SESSION['email']=$email;
+    $_SESSION['password']=$psw;
+     header("location:admin/dashboard.php");
+
+      }else if($rows['role']==2){
+        $_SESSION['email']=$email;
     $_SESSION['password']=$psw;
      header("location:index.php");
 
+      }
+    }
+    
+
+  }
+  else{
+     header("location:index.php?msg=logerr");
   }
 }
 
@@ -80,8 +94,22 @@ if(isset($_POST['login'])){
             <li><a href="#about">ABOUT</a></li>
             <li><a href="#services">SERVICES</a></li>
             <li><a href="#traintrips">TRAIN TRIPS</a></li>
-            <li><a href="#register">REGISTER</a></li>
+            
             <li><a href="#contact">CONTACT</a></li>
+            <?php 
+            if(isset($_SESSION['email'])){
+              echo '<li><a href="checkout.php">Check Out</a></li></li>
+              <li><a href="logout.php">Logout</a></li></li>
+
+              ';
+
+            }
+            else{
+              echo'<li><a href="#register">REGISTER</a></li>';
+            }
+
+
+            ?>
           </ul>
         </div>
       </div>
@@ -140,7 +168,26 @@ if(isset($_POST['login'])){
     <!-- End Services Section -->
     
     <!-- Start Train trips Section -->
-    
+    <?php
+    if (isset($_GET['msg'])) {
+      # code...
+      $ms=$_GET['msg'];
+      if($ms=='reg'){
+     echo '<div class="alert alert-danger">Done</div>';
+      }
+      else if($ms=='Nreg'){
+       echo '<div class="alert alert-danger">The email alreal used</div>';
+      }
+      else if ($ms=='logerr'){
+         echo '<div class="alert alert-danger">The email or password is not correct </div>';
+
+      }
+      
+    }
+
+
+
+    ?>
     <div id="Flight" class="container-fluid text-center bg-grey">
       <h2>Train trips</h2><br>
       <h4>where do you want to go?</h4>
@@ -156,8 +203,8 @@ if(isset($_POST['login'])){
               <div class="col-sm-4">
           <div class="thumbnail">
             <img src="img/r.jpg" alt="Riyadh" >
-            <p><strong>Riyadh </strong></p>
-            <p><a href="schedule.html">Train trips to Riyadh</a></p>
+            <p><strong>'.$rows['city_name'].'</strong></p>
+            <p><a href="schedule.php?id_ci='.$rows['id'].'">Train trips to Riyadh</a></p>
           </div>
         </div>
 

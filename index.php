@@ -202,7 +202,7 @@ if(isset($_POST['login'])){
               echo '
               <div class="col-sm-4">
           <div class="thumbnail">
-            <img src="img/r.jpg" alt="Riyadh" >
+            <img src="'.$rows['spath'].'" alt="Riyadh" >
             <p><strong>'.$rows['city_name'].'</strong></p>
             <p><a href="schedule.php?id_ci='.$rows['id'].'">Train trips to Riyadh</a></p>
           </div>

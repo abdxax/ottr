@@ -1,11 +1,46 @@
 <?php
 session_start();
 require "../conne.php";
-if(isset($_POST['subs'])){
+/*if(isset($_POST['subs'])){
   $city=strip_tags($_POST['city']);
   $sql="INSERT INTO city (city_name)VALUES ('$city')";
   if(mysqli_query($mycon,$sql)){
     header("location:addCity.php");
+  }
+}*/
+if(isset($_FILES['img'])){
+  print_r($_FILES['img']);
+  $imgName=$_FILES['img']['name'];
+  $imgName=$_FILES['img']['name'];
+  $imgType=$_FILES['img']['type'];
+  $imgSize=$_FILES['img']['size'];
+  $imgtemp=$_FILES['img']['tmp_name'];
+
+  $tym=array('jpeg','jpg','png');
+  //$endfile=end($imgName);
+  //$fiel=strtolower($endfile);
+  $endty=end(explode('.',$imgName));
+  $enf=strtolower($endty);
+echo $enf;
+  if(!in_array($enf,$tym)){
+echo "imge type";
+  }else{
+    $path="../img/$imgName";
+    if(move_uploaded_file($imgtemp,$path)){
+      $path2="img/$imgName";
+      $city=strip_tags($_POST['city']);
+  $sql="INSERT INTO city (city_name,spath)VALUES ('$city','$path2')";
+  if(mysqli_query($mycon,$sql)){
+    header("location:addCity.php");
+  }else{
+    echo "sql insert ";
+  }
+
+
+
+    }else{
+     echo"upload ";
+    }
   }
 }
 ?>
@@ -231,9 +266,12 @@ if(isset($_POST['subs'])){
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <form method="POST">
-                  <div class="form-group">
+                <form method="POST" enctype="multipart/form-data">
+                  <div class="form-group col-7">
                     <input type="text" name="city" class="form-control">
+                  </div>
+                  <div class="form-group col-7">
+                    <input type="file" name="img" class="form-control">
                   </div>
                   <div class="form-group">
                     <input type="submit" name="subs" value="Save" class="btn btn-info">
@@ -259,6 +297,7 @@ if(isset($_POST['subs'])){
                       echo '
                       <tr>
                       <td>'.$rows['city_name'].'</td>
+                      <td><a href="delCity.php?id='.$rows['id'].'" class="btn btn-danger">Delete</a></td>
 
                       </tr>
 

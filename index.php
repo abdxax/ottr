@@ -99,6 +99,7 @@ if(isset($_POST['login'])){
             <?php 
             if(isset($_SESSION['email'])){
               echo '<li><a href="checkout.php">Check Out</a></li></li>
+              <li><a href="ticketTab.php">My Ticket</a></li></li>
               <li><a href="logout.php">Logout</a></li></li>
 
               ';

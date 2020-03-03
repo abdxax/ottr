@@ -9,8 +9,9 @@ if(isset($_POST['subs'])){
   $opr=strip_tags($_POST['opr']);
   $price=strip_tags($_POST['price']);
   $id=strip_tags($_POST['on']);
+  $date_tra=strip_tags($_POST['dat']);
 
-  $sql="INSERT INTO trip (city_id,tripon,DeparturTime,ArrivalTime,city_to,OperationsDays,price)VALUES ('$from','$id','$deptime','$arrivTime','$to','$opr',$price)";
+  $sql="INSERT INTO trip (city_id,tripon,DeparturTime,ArrivalTime,city_to,OperationsDays,price,date_trav)VALUES ('$from','$id','$deptime','$arrivTime','$to','$opr','$price','$date_tra')";
   if(mysqli_query($mycon,$sql)){
     header("location:addTrip.php");
   }
@@ -306,6 +307,11 @@ if(isset($_POST['subs'])){
                    <div class="form-group col-7">
                     <label>Price</label>
                    <input type="text" name="price" class="form-control">
+                   </div>
+
+                   <div class="form-group col-7">
+                    <label>Date</label>
+                   <input type="text" name="dat" class="form-control">
                    </div>
 
 

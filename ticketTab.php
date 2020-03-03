@@ -72,44 +72,53 @@ require "conne.php";
             <th>Departur Station</th>
             <th>Arrival Station</th>
             <th>Operations Days</th>
-            <th>price</th>
+            <th>Ticket</th>
           </tr>
         </thead>
         <tbody>
          <?php
-         $id_ci=strip_tags($_GET['id_ci']);
-         $sql_teb="SELECT * FROM trip LEFT JOIN city ON trip.city_to=city.id WHERE trip.city_to='$id_ci'";
-         $res=mysqli_query($mycon,$sql_teb);
-         while ($rows=mysqli_fetch_array($res)) {
-           # code...
+         
+         $email=$_SESSION['email'];
+         $sql="SELECT * FROM cars LEFT JOIN trip ON cars.triton=trip.tripon WHERE cars.email='$email' AND status='Done'";
+         $res=mysqli_query($mycon,$sql);
 
-          echo '
-         <tr>
-         <td>'.$rows['tripon'].'</td>
-         <td>'.$rows['DeparturTime'].'</td>
-         <td>'.$rows['ArrivalTime'].'</td>
-         ';
-    $sql_city="SELECT * FROM city WHERE id='$rows[city_id]'";
-    $res2=mysqli_query($mycon,$sql_city);
-    $ciy='';
-    while ($rowe=mysqli_fetch_array($res2)) {
-      # code...
-      $ciy=$rowe['city_name'];
-    }
-
-         echo '<td>'.$ciy.'</td>
-
-         <td>'.$rows['city_name'].'</td>
-         <td>'.$rows['OperationsDays'].'</td>
-         <td>'.$rows['price'].'</td>';
-         if(isset($_SESSION['email'])){
-          echo '<td><a href="addCar.php?idon='.$rows['tripon'].' class="btn btn-info">Booking </a></td>';
-         }
-
-         echo '</tr>
+        // echo mysqli_num_rows($res);
+        while ($rows=mysqli_fetch_array($res)) {
+            # code...
+ 
+           echo '
+          <tr>
+          <td>'.$rows['tripon'].'</td>
+          <td>'.$rows['DeparturTime'].'</td>
+          <td>'.$rows['ArrivalTime'].'</td>
           ';
-         }
-
+     $sql_city="SELECT * FROM city WHERE id='$rows[city_id]'";
+     $res3=mysqli_query($mycon,$sql_city);
+     $ciy='';
+     while ($rowe=mysqli_fetch_array($res3)) {
+       # code...
+       $ciy=$rowe['city_name'];
+     }
+ 
+          echo '<td>'.$ciy.'</td>';
+          $sql_city2="SELECT * FROM city WHERE id='$rows[city_to]'";
+          $res2=mysqli_query($mycon,$sql_city2);
+          $ciy2='';
+          while ($rowe=mysqli_fetch_array($res2)) {
+            # code...
+            $ciy2=$rowe['city_name'];
+          }
+ 
+          echo'<td>'.$ciy2.'</td>';
+         echo' <td>'.$rows['OperationsDays'].'</td>'
+          ;
+          if(isset($_SESSION['email'])){
+           echo '<td><a href="ticket.php?idon='.$rows['tripon'].' class="btn btn-info">Ticket </a></td>';
+          }
+ 
+          echo '</tr>
+           ';
+          }
          ?>
         </tbody>
       </table>
